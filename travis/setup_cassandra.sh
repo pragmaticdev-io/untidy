@@ -4,7 +4,7 @@ function cassandra_ready() {
     count=0
     while ! cqlsh -e "describe cluster;" 2>&1 ; do
         echo "waiting for cassandra"
-        if [ $count -gt 30 ]
+        if [ $count -gt 60 ]
         then
             exit
         fi

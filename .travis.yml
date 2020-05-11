@@ -3,7 +3,7 @@ jdk:
   - openjdk11
 services:
   - cassandra
-before_install:
+before_script:
   - travis/setup_cassandra.sh
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
