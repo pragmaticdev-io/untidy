@@ -1,4 +1,5 @@
 #!/bin/bash
+pip install cqlsh
 function cassandra_ready() {
     count=0
     while ! cqlsh -e "describe cluster;" 2>&1 ; do
