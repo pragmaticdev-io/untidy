@@ -1,8 +1,9 @@
+dist: bionic
 language: java
-jdk:
-  - openjdk11
 services:
   - cassandra
+jdk:
+  - openjdk11
 before_script:
   - travis/setup_cassandra.sh
 before_cache:
