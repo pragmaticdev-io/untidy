@@ -4,7 +4,7 @@ jdk:
 services:
   - cassandra
 before_install:
-  - cqlsh
+  - travis/setup_cassandra.sh
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
