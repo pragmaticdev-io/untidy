@@ -1,11 +1,7 @@
 dist: bionic
 language: java
-services:
-  - cassandra
 jdk:
   - openjdk11
-before_script:
-  - travis/setup_cassandra.sh
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
