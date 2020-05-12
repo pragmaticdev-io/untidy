@@ -1,6 +1,8 @@
 # UnTidy: URL Shortener
 
 [![Build Status](https://travis-ci.com/pragmaticdev-io/untidy.svg?branch=master)](https://travis-ci.com/pragmaticdev-io/untidy)
+[![codecov](https://codecov.io/gh/pragmaticdev-io/untidy/branch/master/graph/badge.svg)](https://codecov.io/gh/pragmaticdev-io/untidy)
+
 
 Check out the [PragmaticDev Blog](https://blog.pragmaticdev.io/) for a series of posts about building this project.
 
