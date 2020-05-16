@@ -24,22 +24,34 @@ configurations {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
+val springVersion = "2.3.0.RELEASE"
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-data-cassandra")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    // Kotlin
+    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    compileOnly("org.projectlombok:lombok")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    annotationProcessor("org.projectlombok:lombok")
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
+
+    // Spring Boot
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-web", version = springVersion)
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-actuator", version = springVersion)
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-data-cassandra", version = springVersion)
+    developmentOnly(group = "org.springframework.boot", name = "spring-boot-devtools", version = springVersion)
+    testImplementation(group = "org.springframework.boot", name = "spring-boot-starter-test", version = springVersion) {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
-    testImplementation("org.cassandraunit:cassandra-unit-spring:3.11.2.0")
+
+    // Java Help
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+
+    testImplementation(group = "org.cassandraunit", name = "cassandra-unit-spring", version = "4.3.1.0") {
+        exclude(group = "org.cassandraunit", module = "cassandra-unit")
+    }
 }
 
 tasks.withType<Test> {
