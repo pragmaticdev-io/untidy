@@ -1,0 +1,112 @@
+openapi: 3.0.0
+info:
+  title: UnTidy
+  description: UnTidy URL shortening service
+  version: 0.1.0
+servers:
+  - url: 'https://api.untidy.cc/'
+tags:
+  - name: URL
+    description: URL Interactions
+paths:
+  /v0/tidylink:
+    post:
+      description: Create a shortened URL
+      summary: Shorten a URL
+      operationId: createShortURL
+      requestBody:
+        $ref: '#/components/requestBodies/CreateUrlBody'
+      responses:
+        201:
+          $ref: '#/components/responses/URLResponse'
+  /v0/tidylink/{id}:
+    get:
+      description: Public information on a URL
+      summary: Describe a URL
+      operationId: getShortURL
+      responses:
+        200:
+          $ref: '#/components/responses/URLResponse'
+        404:
+          $ref: '#/components/responses/URLNotFound'
+  /{id}:
+    get:
+      summary: Get URL Redirect
+      operationId: redirectURL
+      responses:
+        301:
+          description: Redirect
+          headers:
+            Location:
+              description: The expanded URL
+              schema:
+                type: string
+                format: uri
+        404:
+          $ref: '#/components/responses/URLNotFound'
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - error_code
+        - message
+      properties:
+        error_code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    NewURL:
+      type: object
+      properties:
+        original_url:
+          type: string
+          format: uri
+          required: true
+    URLMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "NAasHGa"
+        created_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+    TidyURL:
+      type: object
+      properties:
+        tidy_url:
+          type: string
+          format: uri
+          example: "https://UnTidy.cc/NAasHGa"
+    URL:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/URLMetadata'
+        - $ref: '#/components/schemas/NewURL'
+        - $ref: '#/components/schemas/TidyURL'
+  requestBodies:
+    CreateUrlBody:
+      description: user to add to the system
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/NewURL'
+  responses:
+    URLResponse:
+      description: URL information
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/URL'
+    URLNotFound:
+      description: Not found
+      content:
+        'application/json':
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Error'
