@@ -4,12 +4,12 @@ info:
   description: UnTidy URL shortening service
   version: 0.1.0
 servers:
-  - url: 'http://localhost:8080/api'
+  - url: 'https://api.untidy.cc/'
 tags:
   - name: URL
     description: URL Interactions
 paths:
-  /tidylink:
+  /v0/tidylink:
     post:
       description: Create a shortened URL
       summary: Shorten a URL
@@ -19,7 +19,7 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/URLResponse'
-  /tidylink/{id}:
+  /v0/tidylink/{id}:
     get:
       description: Public information on a URL
       summary: Describe a URL
@@ -29,7 +29,6 @@ paths:
           $ref: '#/components/responses/URLResponse'
         404:
           $ref: '#/components/responses/URLNotFound'
-
   /{id}:
     get:
       summary: Get URL Redirect
