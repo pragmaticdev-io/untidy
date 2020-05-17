@@ -2,7 +2,8 @@ package io.pragmaticdev.untidy.core.controller
 
 import io.pragmaticdev.untidy.core.model.TidyURL
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import javax.servlet.http.HttpServletResponse
