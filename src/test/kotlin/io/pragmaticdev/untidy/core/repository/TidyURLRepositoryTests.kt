@@ -1,17 +1,21 @@
-package io.pragmaticdev.untidy
+package io.pragmaticdev.untidy.core.repository
 
+import io.pragmaticdev.untidy.core.model.TidyURL
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
-
 @SpringBootTest
-class RepositoriesTests @Autowired constructor(
-        val tidyURLRepository: TidyURLRepository
-) {
+class TidyURLRepositoryTests {
+
+    @Autowired
+    lateinit var tidyURLRepository: TidyURLRepository
+
+    @BeforeEach
     @AfterEach
     fun cleanup() {
         tidyURLRepository.deleteAll()
@@ -25,4 +29,5 @@ class RepositoriesTests @Autowired constructor(
         val found = tidyURLRepository.findById("xad2wSx")
         assertThat(found.get().id, equalTo("xad2wSx"))
     }
+
 }

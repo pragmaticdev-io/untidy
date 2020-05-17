@@ -12,22 +12,11 @@ group = "io.pragmaticdev"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-val developmentOnly by configurations.creating
-configurations {
-    runtimeClasspath {
-        extendsFrom(developmentOnly)
-    }
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
-
 repositories {
     mavenCentral()
     jcenter()
 }
 
-val springVersion = "2.3.0.RELEASE"
 dependencies {
     // Kotlin
     implementation(kotlin("stdlib-jdk8"))
@@ -37,21 +26,21 @@ dependencies {
     testImplementation(kotlin("test-junit"))
 
     // Spring Boot
-    implementation(group = "org.springframework.boot", name = "spring-boot-starter-web", version = springVersion)
-    implementation(group = "org.springframework.boot", name = "spring-boot-starter-actuator", version = springVersion)
-    implementation(group = "org.springframework.boot", name = "spring-boot-starter-data-cassandra", version = springVersion)
-    developmentOnly(group = "org.springframework.boot", name = "spring-boot-devtools", version = springVersion)
-    testImplementation(group = "org.springframework.boot", name = "spring-boot-starter-test", version = springVersion) {
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-web")
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-data-cassandra")
+    compileOnly(group = "org.springframework.boot", name = "spring-boot-devtools")
+    testImplementation(group = "org.springframework.boot", name = "spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
 
     // Java Help
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+}
 
-    testImplementation(group = "org.cassandraunit", name = "cassandra-unit-spring", version = "4.3.1.0") {
-        exclude(group = "org.cassandraunit", module = "cassandra-unit")
-    }
+springBoot {
+    buildInfo()
 }
 
 tasks.withType<Test> {
