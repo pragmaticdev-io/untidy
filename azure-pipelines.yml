@@ -23,7 +23,8 @@ steps:
       
       sudo apt-get update
       sudo apt-get install cassandra
-      
+      sudo service cassandra start
+      nodetool status
       cqlsh -e "create keyspace keyspace_name with replication = {'class': 'SimpleStrategy', 'replication_factor': 1};"
 - task: Gradle@2
   inputs:
