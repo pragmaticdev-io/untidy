@@ -8,27 +8,18 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-
+resources:
+  containers:
+    - container: cassandra
+      image: cassandra:3
 steps:
-
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      # Write your commands here
-      
-      echo "deb https://downloads.apache.org/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
-      
-      curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
-      
-      sudo apt-get update
-      sudo apt-get install cassandra
-      sudo service cassandra start
-      sudo service cassandra status
-      sleep 60
-      sudo service cassandra status
-      nodetool status
-      cqlsh -e "create keyspace keyspace_name with replication = {'class': 'SimpleStrategy', 'replication_factor': 1};"
+      while ! nc -z cassandra 9042 </dev/null; do sleep 10; done
+      nodetool --host cassandra status
+      cqlsh -e "create keyspace keyspace_name with replication = {'class': 'SimpleStrategy', 'replication_factor': 1};" cassandra
 - task: Gradle@2
   inputs:
     workingDirectory: ''
