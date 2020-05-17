@@ -12,6 +12,8 @@ resources:
   containers:
     - container: cassandra
       image: cassandra:3
+services:
+  cassandra: cassandra
 steps:
 - task: Bash@3
   inputs:
