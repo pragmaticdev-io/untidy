@@ -16,6 +16,19 @@ steps:
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'up'
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your commands here
+      
+      pip install cqlsh
+      
+      while ! cqlsh -e 'describe cluster' ; do
+          sleep 1
+      done
+      
+      cqlsh -e "create keyspace keyspace_name with replication = {'class': 'SimpleStrategy', 'replication_factor': 1};"
 - task: Gradle@2
   inputs:
     workingDirectory: ''
