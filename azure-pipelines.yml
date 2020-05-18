@@ -20,12 +20,14 @@ container: my_container
 
 services:
   cassandra: cassandra
+
 steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      apt-get install -y netcat python
+      set -e
+      apt install -y netcat python
       while ! nc -z cassandra 9042 </dev/null; do sleep 10; done
       nodetool --host cassandra status
       cqlsh -e "create keyspace keyspace_name with replication = {'class': 'SimpleStrategy', 'replication_factor': 1};" cassandra
