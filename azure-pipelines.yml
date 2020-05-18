@@ -23,7 +23,7 @@ steps:
     targetType: 'inline'
     script: |
       sudo apt-get install -y netcat
-      while ! nc -z localhost 9042 </dev/null; do sleep 10; done
+      while ! nc -z cassandra 9042 </dev/null; do echo "trying to connect" && sleep 10; done
 - task: Gradle@2
   inputs:
     workingDirectory: ''
