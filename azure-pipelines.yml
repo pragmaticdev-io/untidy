@@ -6,12 +6,18 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
 resources:
   containers:
+    - container: my_container
+      image: ubuntu
     - container: cassandra
       image: cassandra:3
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+container: my_container
+
 services:
   cassandra: cassandra
 steps:
