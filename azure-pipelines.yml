@@ -8,15 +8,11 @@ trigger:
 
 resources:
   containers:
-    - container: my_container
-      image: ubuntu
     - container: cassandra
       image: cassandra:3
 
 pool:
   vmImage: 'ubuntu-latest'
-
-container: my_container
 
 services:
   cassandra: cassandra
@@ -26,10 +22,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      apt-get install -y netcat python
-      while ! nc -z cassandra 9042 </dev/null; do sleep 10; done
-      nodetool --host cassandra status
-      cqlsh -e "create keyspace keyspace_name with replication = {'class': 'SimpleStrategy', 'replication_factor': 1};" cassandra
+      sudo apt-get install -y netcat
+      while ! nc -z localhost 9042 </dev/null; do sleep 10; done
 - task: Gradle@2
   inputs:
     workingDirectory: ''
